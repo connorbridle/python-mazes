@@ -28,4 +28,5 @@ myGrid[0][1] = 5
 def start_prims_algorithm(wallGrid):
     # Pass in a grid full of walls (1's) and this function will return a matrix after prims algorithm
     chosenCell = random.randint(0, len(wallGrid))
+    print("Just testing some repo stuff")
 
