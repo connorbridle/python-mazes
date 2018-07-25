@@ -61,4 +61,4 @@ def make_maze(size):
         print(grid[i])
 
 
-make_maze(16)
+make_maze(8)
