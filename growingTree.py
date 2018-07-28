@@ -1,4 +1,23 @@
 import random
+import pygame
+
+
+# function that starts the window
+def start_maze_window():
+    print("Testing")
+    pygame.init()
+    window = pygame.display.set_mode((800, 600))
+    pygame.display.set_caption("Maze Generation")
+    black = (0, 0, 0)
+
+    # Main game Loop
+    gameloop = True
+    while gameloop:
+        for event in pygame.event.get():
+            if event.type==pygame.QUIT:
+                gameloop = False
+        window.fill(black)
+    pygame.quit()
 
 
 # Chooses the newest visited cell in the list
@@ -19,8 +38,8 @@ def make_maze(size):
             grid[x].append('#')
 
     # Cho0sing a random cell and adding it to the list
-    # x, y = random.randint(0, width-1), random.randint(0, height-1)
-    x, y = 0, 0
+    # x, y = random.randint(1, width-1), random.randint(1, height-1)
+    x, y = 1, 1
     cells.append([x, y])
     grid[y][x] = ' '
 
@@ -30,13 +49,13 @@ def make_maze(size):
         index = choose_newest_visited_cell(len(cells)) # Chooses the last visited cell in the cells list
         x, y = cells[index]
         # Looking for potential neighbours
-        if (x + 2) < width and grid[y][x + 2] == '#':
+        if (x + 2) < width-1 and grid[y][x + 2] == '#':
             frontiers.append([y, x + 2])
-        if (x - 2) >= 0 and grid[y][x - 2] == '#':
+        if (x - 2) >= 1 and grid[y][x - 2] == '#':
             frontiers.append([y, x - 2])
-        if (y + 2) < height and grid[y + 2][x] == '#':
+        if (y + 2) < height-1 and grid[y + 2][x] == '#':
             frontiers.append([y + 2, x])
-        if (y - 2) >= 0 and grid[y - 2][x] == '#':
+        if (y - 2) >= 1 and grid[y - 2][x] == '#':
             frontiers.append([y - 2, x])
         print("X: " + str(x) + " Y: " + str(y))
         print(frontiers)
@@ -47,8 +66,8 @@ def make_maze(size):
             randomIndex = random.randint(0, len(frontiers)-1)
             fronty, frontx = frontiers[randomIndex]
             # Changes the cell between the neighbour cell and current cell to ' ' (carves the wall)
-            grid[int((y + fronty) / 2)][int((x + frontx) / 2)] = ' '
-            grid[fronty][frontx] = ' '
+            grid[int((y + fronty) / 2)][int((x + frontx) / 2)] = 'C'
+            grid[fronty][frontx] = 'C'
             # Add the chosen neighbour to the list
             cells.append([frontx, fronty])
             index = None
@@ -57,8 +76,11 @@ def make_maze(size):
             cells.pop(index)
 
     # Print out the final maze
-    for i in range(size):
-        print(grid[i])
+    for i in range(len(grid)):
+        print(*grid[i])
 
 
-make_maze(8)
+# Works best with even numbers
+make_maze(51)
+
+# start_maze_window()
